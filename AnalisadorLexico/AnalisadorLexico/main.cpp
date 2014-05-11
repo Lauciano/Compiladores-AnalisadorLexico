@@ -7,7 +7,7 @@ int main(int n_arg, char** args){
 	//Variáveis e Ponteiros
 	ifstream *code;
 	ofstream *lexc;
-	vector<string> l_reserv = {"program", "var", "integer","real","boolean",
+	string l_reserv[] = {"program", "var", "integer","real","boolean",
 		"procedure","begin","end","if", "then","else","while","do","not"};
 	string *f_name = new string(args[1]),
 		*e_code = new string(".code"),
@@ -18,6 +18,10 @@ int main(int n_arg, char** args){
 	lexc = new ofstream((*f_name + *e_lexc).c_str());
 
 	//Análise Léxica
+
+	/*Inicio do autômato, estado 1*/
+
+
 
 	//Fechamento de Arquivos
 	code->close;
