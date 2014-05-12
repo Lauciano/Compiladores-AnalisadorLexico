@@ -1,6 +1,7 @@
 #include <fstream>
 #include <vector>
 #include <list>
+#include "LexicalAnalyzer.h"
 
 using namespace std;
 
@@ -8,7 +9,6 @@ using namespace std;
 int main(int n_arg, char** args){
 	//Variáveis e Ponteiros
 	ifstream *code;
-	char c;
 	ofstream *lexc;
 	//string l_reserv[] = {"program", "var", "integer","real","boolean",
 	//	"procedure","begin","end","if", "then","else","while","do","not"};
@@ -30,12 +30,19 @@ int main(int n_arg, char** args){
 	//input = fopen((char*)(f_name),"r");
 	//output = fopen((char*)(e_lexc),"w");
 	
-
 	//Análise Léxica
+	LexicalAnalyzer *lex = new LexicalAnalyzer();
+	lex->analyze(code);
+	lex->writeOutput(lexc);
 
 	//Fechamento de Arquivos
 	code->close();
 	lexc->close();
+
+	//Deletações
+	delete lex;
+	delete lexc;
+	delete code;
 
 	//Retorno
 	return 0;

@@ -21,6 +21,11 @@ LexicalAnalyzer::LexicalAnalyzer(){
 	restricted_word->push_back("not");
 }
 
+LexicalAnalyzer::~LexicalAnalyzer(){
+	delete token;
+	delete restricted_word;
+}
+
 void LexicalAnalyzer::analyze(ifstream *code){
 	bool commentary = false;
 	char reading[256], tk[256];
@@ -38,33 +43,38 @@ void LexicalAnalyzer::analyze(ifstream *code){
 				/* Comando de Atribuição */
 				if (reading[i] == ':' && reading[i + 1] == '='){
 					tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
-					lexToken newTok(counter, *(new string(tk)), *(new string("Comando de Atribuicao")));
+					string word(tk);
+					lexToken newTok(counter, word, "Comando de Atribuicao");
 					token->push_back(newTok);
 					i += 2;
 				}
 				/* Operadores Relacionais */
 				else if (reading[i] == '<' && reading[i + 1] == '='){
 					tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
-					lexToken newTok(counter, *(new string(tk)), *(new string("Operador Relacional")));
+					string word(tk);
+					lexToken newTok(counter, word, "Operador Relacional");
 					token->push_back(newTok);
 					i += 2;
 				}
 				else if (reading[i] == '>' && reading[i + 1] == '='){
 					tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
-					lexToken newTok(counter, *(new string(tk)), *(new string("Operador Relacional")));
+					string word(tk);
+					lexToken newTok(counter, word, "Operador Relacional");
 					token->push_back(newTok);
 					i += 2;
 				}
 				else if (reading[i] == '<' && reading[i + 1] == '>'){
 					tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
-					lexToken newTok(counter, *(new string(tk)), *(new string("Operador Relacional")));
+					string word(tk);
+					lexToken newTok(counter, word, "Operador Relacional");
 					token->push_back(newTok);
 					i += 2;
 				}
 				/* Operadores Aditivos */
 				else if (reading[i] == 'o' && reading[i + 1] == 'r'){
 					tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
-					lexToken newTok(counter, *(new string(tk)), *(new string("Operador Aditivo")));
+					string word(tk);
+					lexToken newTok(counter, word, "Operador Aditivo");
 					token->push_back(newTok);
 					i += 2;
 				}
@@ -72,7 +82,8 @@ void LexicalAnalyzer::analyze(ifstream *code){
 				else if (reading[i] == 'a' && reading[i + 1] == 'n' && reading[i + 2] == 'd' && reading[i + 3] != '_' && !isNumber(reading[i + 3])
 					&& !isLetter(reading[i + 3])){
 					tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = reading[i + 2]; tk[3] = '\0';
-					lexToken newTok(counter, *(new string(tk)), *(new string("Operador Multiplicativo")));
+					string word(tk);
+					lexToken newTok(counter, word, "Operador Multiplicativo");
 					token->push_back(newTok);
 					i += 3;
 				}
@@ -80,25 +91,29 @@ void LexicalAnalyzer::analyze(ifstream *code){
 				/* Símbolos Simples */
 				/* Delimitadores */
 				else if (reading[i] == ';' || reading[i] == '.' || reading[i] == ':' || reading[i] == '(' || reading[i] == ')' || reading[i] == ','){
-					lexToken newTok(counter, *(new string(&reading[i])), *(new string("Delimitador")));
+					string word(&reading[i]);
+					lexToken newTok(counter, word, "Delimitador");
 					token->push_back(newTok);
 					i++;
 				}
 				/* Operador Relacional */
 				else if (reading[i] == '=' || reading[i] == '<' || reading[i] == '>'){
-					lexToken newTok(counter, *(new string(&reading[i])), *(new string("Operador Relacional")));
+					string word(&reading[i]);
+					lexToken newTok(counter, word, "Operador Relacional");
 					token->push_back(newTok);
 					i++;
 				}
 				/* Operador Aditivo */
 				else if (reading[i] == '+' || reading[i] == '-'){
-					lexToken newTok(counter, *(new string(&reading[i])), *(new string("Operador Aditivo")));
+					string word(tk);
+					lexToken newTok(counter, word, "Operador Aditivo");
 					token->push_back(newTok);
 					i++;
 				}
 				/* Operador Multiplicativo */
 				else if (reading[i] == '*' || reading[i] == '/'){
-					lexToken newTok(counter, *(new string(&reading[i])), *(new string("Operador Multiplicativo")));
+					string word(tk);
+					lexToken newTok(counter, word, "Operador Multiplicativo");
 					token->push_back(newTok);
 					i++;
 				}
