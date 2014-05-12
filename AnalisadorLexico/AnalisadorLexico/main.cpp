@@ -12,11 +12,11 @@ int main(int n_arg, char** args){
 	ofstream *lexc;
 	//string l_reserv[] = {"program", "var", "integer","real","boolean",
 	//	"procedure","begin","end","if", "then","else","while","do","not"};
-	char input[256], output[256];
-	strcmp(input, args[1]);
-	strcmp(output, args[1]);
-	strcat(input, ".txt");
-	strcat(output, ".out");
+	char input[256] = "TextLex.txt", output[256] = "TextLex.out";
+	//strcmp(input, args[1]);
+	//strcmp(output, args[1]);
+	//strcat(input, ".txt");
+	//strcat(output, ".out");
 
 	//std::list<lexToken> list;
 
