@@ -3,6 +3,21 @@
 
 using namespace std;
 
+class lexToken
+{
+	int linha;
+	string nome;
+	string classificacao;
+
+public:
+	lexToken(int line, string name, string classif){
+		linha = line;
+		nome = name;
+		classificacao = classif;
+	}
+};
+
+
 class LexicalAnalyzer{
 public:
 	LexicalAnalyzer();
