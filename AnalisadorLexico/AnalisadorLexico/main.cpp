@@ -1,6 +1,5 @@
 #include <fstream>
 #include <vector>
-#include <stdio.h>
 #include <list>
 
 using namespace std;
@@ -13,17 +12,19 @@ int main(int n_arg, char** args){
 	ofstream *lexc;
 	//string l_reserv[] = {"program", "var", "integer","real","boolean",
 	//	"procedure","begin","end","if", "then","else","while","do","not"};
-	string *f_name = new string(args[1]),
-		*e_code = new string(".txt"),
-		*e_lexc = new string(".out");
+	char input[256], output[256];
+	strcmp(input, args[1]);
+	strcmp(output, args[1]);
+	strcat(input, ".txt");
+	strcat(output, ".out");
 
 	//std::list<lexToken> list;
 
 	//Abertura de Arquivos
 	//ISSO AQUI TEM ERRO LAU, CONSERTA AÍ. VOU ASSUMIR QUE CODE e LEXC ESTÃO FUNCIONANDO
 	//O meu intellisense tá dizendo aqui que o operador "+" não pode ser usado com esses operandos aí
-	code = new ifstream((*f_name + *e_code).c_str());
-	lexc = new ofstream((*f_name + *e_lexc).c_str());
+	code = new ifstream(input);
+	lexc = new ofstream(output);
 	//Vou fazer a escrita em C, depois se você quiser mudar beleza.
 	//FILE *input, *output;
 	//input = fopen((char*)(f_name),"r");
