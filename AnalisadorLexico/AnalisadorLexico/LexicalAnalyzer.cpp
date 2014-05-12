@@ -224,11 +224,22 @@ bool LexicalAnalyzer::isLetter(char symbol){
 }
 
 void LexicalAnalyzer::writeOutput(ofstream *output){
-	*output << "Token\t\t\t\tClassificacao\t\t\t\tLinha" << endl;
-	*output << "----------------------------------------------------------------------------------------" << endl;
+	*output << "Token                         Classificacao";
+	*output << "                 Linha" << endl;
+	*output << "----------------------------------------------------------------------------------------------------" << endl;
 	vector<lexToken>::iterator it;
 	for(it = token->begin(); it != token->end(); ++it){
-		*output << it->getName().c_str() << "\t\t\t\t" << it->getClassif().c_str() << "\t\t\t\t" << it->getLine() << endl;
+		//*output << it->getName().c_str() << "\t\t\t\t" << it->getClassif().c_str() << "\t\t\t\t" << it->getLine() << endl;
+		*output << it->getName().c_str();
+		//Aqui tenho que imprimir os espaços
+		for(unsigned int i = 0; i < 30 - it->getName().length(); i++){
+			*output << " ";
+		}
+		*output << it->getClassif().c_str();
+		for(unsigned int i = 0; i < 30 - it->getClassif().length(); i++){
+			*output << " ";
+		}
+		*output << it->getLine() << endl;
 	}
 }
 
