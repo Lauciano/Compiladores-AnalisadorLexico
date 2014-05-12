@@ -10,8 +10,8 @@ int main(int n_arg, char** args){
 	string l_reserv[] = {"program", "var", "integer","real","boolean",
 		"procedure","begin","end","if", "then","else","while","do","not"};
 	string *f_name = new string(args[1]),
-		*e_code = new string(".code"),
-		*e_lexc = new string(".lexc");
+		*e_code = new string(".txt"),
+		*e_lexc = new string(".out");
 
 	//Abertura de Arquivos
 	code = new ifstream((*f_name + *e_code).c_str());
