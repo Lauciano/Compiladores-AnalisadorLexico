@@ -1,20 +1,20 @@
 #include <fstream>
+#include <string.h>
 #include <vector>
 
 using namespace std;
 
-class lexToken
-{
-	int linha;
-	string nome;
-	string classificacao;
-
+class lexToken {
 public:
-	lexToken(int line, string name, string classif){
+	lexToken(unsigned int line, string name, string classif){
 		linha = line;
 		nome = name;
 		classificacao = classif;
 	}
+private:
+	unsigned int linha;
+	string nome;
+	string classificacao;
 };
 
 

@@ -27,18 +27,6 @@ int LexicalAnalyzer::analyze(ifstream *code){
 		code->getline(reading, 256);
 		counter++;
 		for (int i = 0; i < 256; /*Propositalmente Vazio*/){
-			/* Conjuntos de Símbolos */
-			/* Palavra Reservada ou Identificador */
-			if (isLetter(reading[i])){
-				int j = 0;
-				tk[j] = reading[i++];
-				for (j++; isLetter(reading[i]) || isNumber(reading[i]) || reading[i] == '_'; j++){
-					tk[j] = reading[i++];
-				}
-				tk[j] = '\0';
-				token->push_back(*(new string(tk)));
-				/* Continuar aqui */
-			}
 			/* Símbolos Compostos */
 			/* Comando de Atribuição */
 			if (reading[i] == ':' && reading[i + 1] == '='){
@@ -110,6 +98,53 @@ int LexicalAnalyzer::analyze(ifstream *code){
 				type->push_back("Operador multiplicativo");
 				line->push_back(counter);
 				i++;
+			}
+			/*************************/
+			/* Conjuntos de Símbolos */
+			/* Palavra Reservada ou Identificador */
+			else if (isLetter(reading[i])){
+				int j = 0;
+				tk[j] = reading[i++];
+				for (j++; isLetter(reading[i]) || isNumber(reading[i]) || reading[i] == '_'; j++){
+					tk[j] = reading[i++];
+				}
+				tk[j] = '\0';
+				for (j = 0; j < restricted_word->size(); j++){
+					if (!strcmp(tk, restricted_word->at(j).c_str())){
+						string word(tk);
+						lexToken lex(counter, word, "Palavra reservada");
+						token->push_back(lex);
+					}
+					else {
+						string word(tk);
+						lexToken lex(counter, word, "Identificador");
+						token->push_back(lex);
+					}
+				}
+			}
+			/* Números Inteiros ou Reais */
+			else if (isNumber(reading[i])){
+				int j = 0;
+				tk[j] = reading[i++];
+				for (j++; isNumber(reading[i]); j++){
+					tk[j] = reading[i++];
+				}
+				if (reading[i] == '.'){
+					tk[j] = reading[i];
+					for (j++; isNumber(reading[i]); j++){
+						tk[j] = reading[i++];
+					}
+					tk[j] = '\0';
+					string word(tk);
+					lexToken lex(counter, word, "Número real");
+					token->push_back(lex);
+				}
+				else {
+					tk[j] = '\0';
+					string word(tk);
+					lexToken lex(counter, word, "Número inteiro");
+					token->push_back(lex);
+				}
 			}
 		}
 	}
