@@ -178,9 +178,10 @@ bool LexicalAnalyzer::isLetter(char symbol){
 
 void LexicalAnalyzer::writeOutput(ofstream *output){
 	*output << "Token\t\t\t\tClassificacao\t\t\t\tLinha" << endl;
+	*output << "----------------------------------------------------------------------------------------" << endl;
 	vector<lexToken>::iterator it;
-	for(it = token->begin(); it == token->end(); ++it){
-		*output << it->nome << endl;
+	for(it = token->begin(); it != token->end(); ++it){
+		*output << it->getName().c_str() << "\t\t\t\t" << it->getLine() << "\t\t\t\t" << it->getClassif().c_str() <<  endl;
 	}
 }
 

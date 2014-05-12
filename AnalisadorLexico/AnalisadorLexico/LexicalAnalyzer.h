@@ -5,6 +5,12 @@
 using namespace std;
 
 class lexToken {
+
+private:
+	unsigned int linha;
+	string nome;
+	string classificacao;
+
 public:
 	lexToken(unsigned int line, string name, string classif){
 		linha = line;
@@ -20,10 +26,6 @@ public:
 	string getClassif(){
 		return classificacao;
 	}
-private:
-	unsigned int linha;
-	string nome;
-	string classificacao;
 };
 
 
