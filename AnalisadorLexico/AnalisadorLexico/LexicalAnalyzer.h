@@ -10,6 +10,7 @@ public:
 	int analyze(ifstream *code);
 	bool checkRestriction(string word);
 	bool isLetter(char symbol);
+	bool isNumber(char symbol);
 private:
 	/* Tabela de Léxicos */
 	vector<string> *token;

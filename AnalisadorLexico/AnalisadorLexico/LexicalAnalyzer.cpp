@@ -5,24 +5,23 @@ LexicalAnalyzer::LexicalAnalyzer(){
 	type = new vector<string>();
 	line = new vector<unsigned int>();
 	restricted_word = new vector<string>();
-	restricted_word->insert(restricted_word->end(), "program");
-	restricted_word->insert(restricted_word->end(), "var");
-	restricted_word->insert(restricted_word->end(), "integer");
-	restricted_word->insert(restricted_word->end(), "real");
-	restricted_word->insert(restricted_word->end(), "boolean");
-	restricted_word->insert(restricted_word->end(), "procedure");
-	restricted_word->insert(restricted_word->end(), "begin");
-	restricted_word->insert(restricted_word->end(), "end");
-	restricted_word->insert(restricted_word->end(), "if");
-	restricted_word->insert(restricted_word->end(), "then");
-	restricted_word->insert(restricted_word->end(), "else");
-	restricted_word->insert(restricted_word->end(), "while");
-	restricted_word->insert(restricted_word->end(), "do");
-	restricted_word->insert(restricted_word->end(), "not");
+	restricted_word->push_back("program");
+	restricted_word->push_back("var");
+	restricted_word->push_back("integer");
+	restricted_word->push_back("real");
+	restricted_word->push_back("boolean");
+	restricted_word->push_back("procedure");
+	restricted_word->push_back("begin");
+	restricted_word->push_back("end");
+	restricted_word->push_back("if");
+	restricted_word->push_back("then");
+	restricted_word->push_back("else");
+	restricted_word->push_back("while");
+	restricted_word->push_back("do");
+	restricted_word->push_back("not");
 }
 
 int LexicalAnalyzer::analyze(ifstream *code){
-	string *word;
 	bool comentary = false;
 	char reading[256], tk[256];
 	unsigned int counter = 0;
@@ -31,85 +30,92 @@ int LexicalAnalyzer::analyze(ifstream *code){
 		counter++;
 		for (int i = 0; i < 256; /*Propositalmente Vazio*/){
 			/* Conjuntos de Símbolos */
-			/* Palavra Reservada */
-			if (reading[i] == '_' || isLetter(reading[i])){
-
+			/* Palavra Reservada ou Identificador */
+			if (isLetter(reading[i])){
+				int j = 0;
+				tk[j] = reading[i++];
+				for (j++; isLetter(reading[i]) || isNumber(reading[i]) || reading[i] == '_'; j++){
+					tk[j] = reading[i++];
+				}
+				tk[j] = '\0';
+				token->push_back(*(new string(tk)));
+				/* Continuar aqui */
 			}
 			/* Símbolos Compostos */
 			/* Comando de Atribuição */
 			if (reading[i] == ':' && reading[i + 1] == '='){
 				tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
-				token->insert(token->end(), *(new string(tk)));
-				type->insert(type->end(), "Comando de Atribuição");
-				line->insert(line->end(), counter);
+				token->push_back(*(new string(tk)));
+				type->push_back("Comando de Atribuição");
+				line->push_back(counter);
 				i += 2;
 			}
 			/* Operadores Relacionais */
 			else if (reading[i] == '<' && reading[i + 1] == '='){
 				tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
-				token->insert(token->end(), *(new string(tk)));
-				type->insert(type->end(), "Operador relacional");
-				line->insert(line->end(), counter);
+				token->push_back(*(new string(tk)));
+				type->push_back("Operador relacional");
+				line->push_back(counter);
 				i += 2;
 			}
 			else if (reading[i] == '>' && reading[i + 1] == '='){
 				tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
-				token->insert(token->end(), *(new string(tk)));
-				type->insert(type->end(), "Operador relacional");
-				line->insert(line->end(), counter);
+				token->push_back(*(new string(tk)));
+				type->push_back("Operador relacional");
+				line->push_back(counter);
 				i += 2;
 			}
 			else if (reading[i] == '<' && reading[i + 1] == '>'){
 				tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
-				token->insert(token->end(), *(new string(tk)));
-				type->insert(type->end(), "Operador relacional");
-				line->insert(line->end(), counter);
+				token->push_back(*(new string(tk)));
+				type->push_back("Operador relacional");
+				line->push_back(counter);
 				i += 2;
 			}
 			/* Operadores Aditivos */
 			else if (reading[i] == 'o' && reading[i + 1] == 'r'){
 				tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
-				token->insert(token->end(), *(new string(tk)));
-				type->insert(type->end(), "Operador aditivo");
-				line->insert(line->end(), counter);
+				token->push_back(*(new string(tk)));
+				type->push_back("Operador aditivo");
+				line->push_back(counter);
 				i += 2;
 			}
 			/* Operadores Multiplicativo */
 			else if (reading[i] == 'a' && reading[i + 1] == 'n' && reading[i + 2] == 'd'){
 				tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = reading[i + 2]; tk[3] = '\0';
-				token->insert(token->end(), *(new string(tk)));
-				type->insert(type->end(), "Operador multiplicativo");
-				line->insert(line->end(), counter);
+				token->push_back(*(new string(tk)));
+				type->push_back("Operador multiplicativo");
+				line->push_back(counter);
 				i += 3;
 			}
 			/********************/
 			/* Símbolos Simples */
 			/* Delimitadores */
 			else if (reading[i] == ';' || reading[i] == '.' || reading[i] == ':' || reading[i] == '(' || reading[i] == ')' || reading[i] == ','){
-				token->insert(token->end(), *(new string(&reading[i])));
-				type->insert(type->end(), "Delimitador");
-				line->insert(line->end(), counter);
+				token->push_back(*(new string(&reading[i])));
+				type->push_back("Delimitador");
+				line->push_back(counter);
 				i++;
 			}
 			/* Operador Relacional */
 			else if (reading[i] == '=' || reading[i] == '<' || reading[i] == '>'){
-				token->insert(token->end(), *(new string(&reading[i])));
-				type->insert(type->end(), "Operador relacional");
-				line->insert(line->end(), counter);
+				token->push_back(*(new string(&reading[i])));
+				type->push_back("Operador relacional");
+				line->push_back(counter);
 				i++;
 			}
 			/* Operador Aditivo */
 			else if (reading[i] == '+' || reading[i] == '-'){
-				token->insert(token->end(), *(new string(&reading[i])));
-				type->insert(type->end(), "Operador aditivo");
-				line->insert(line->end(), counter);
+				token->push_back(*(new string(&reading[i])));
+				type->push_back("Operador aditivo");
+				line->push_back(counter);
 				i++;
 			}
 			/* Operador Multiplicativo */
 			else if (reading[i] == '*' || reading[i] == '/'){
-				token->insert(token->end(), *(new string(&reading[i])));
-				type->insert(type->end(), "Operador multiplicativo");
-				line->insert(line->end(), counter);
+				token->push_back(*(new string(&reading[i])));
+				type->push_back("Operador multiplicativo");
+				line->push_back(counter);
 				i++;
 			}
 		}
@@ -144,4 +150,22 @@ bool LexicalAnalyzer::isLetter(char symbol){
 	letter = letter || symbol == 'y' || symbol == 'Y';
 	letter = letter || symbol == 'z' || symbol == 'Z';
 	return letter;
+}
+
+bool LexicalAnalyzer::isNumber(char symbol){
+	switch (symbol){
+	case '0':
+	case '1':
+	case '2':
+	case '3':
+	case '4':
+	case '5':
+	case '6':
+	case '7':
+	case '8':
+	case '9':
+		return true;
+	default:
+		return false;
+	}
 }
