@@ -73,30 +73,26 @@ int LexicalAnalyzer::analyze(ifstream *code){
 			/* Símbolos Simples */
 			/* Delimitadores */
 			else if (reading[i] == ';' || reading[i] == '.' || reading[i] == ':' || reading[i] == '(' || reading[i] == ')' || reading[i] == ','){
-				token->push_back(*(new string(&reading[i])));
-				type->push_back("Delimitador");
-				line->push_back(counter);
+				lexToken newTok(counter, *(new string(&reading[i])), *(new string("Delimitador")));
+				token->push_back(newTok);
 				i++;
 			}
 			/* Operador Relacional */
 			else if (reading[i] == '=' || reading[i] == '<' || reading[i] == '>'){
-				token->push_back(*(new string(&reading[i])));
-				type->push_back("Operador relacional");
-				line->push_back(counter);
+				lexToken newTok(counter, *(new string(&reading[i])), *(new string("Operador Relacional")));
+				token->push_back(newTok);
 				i++;
 			}
 			/* Operador Aditivo */
 			else if (reading[i] == '+' || reading[i] == '-'){
-				token->push_back(*(new string(&reading[i])));
-				type->push_back("Operador aditivo");
-				line->push_back(counter);
+				lexToken newTok(counter, *(new string(&reading[i])), *(new string("Operador Aditivo")));
+				token->push_back(newTok);
 				i++;
 			}
 			/* Operador Multiplicativo */
 			else if (reading[i] == '*' || reading[i] == '/'){
-				token->push_back(*(new string(&reading[i])));
-				type->push_back("Operador multiplicativo");
-				line->push_back(counter);
+				lexToken newTok(counter, *(new string(&reading[i])), *(new string("Operador Multiplicativo")));
+				token->push_back(newTok);
 				i++;
 			}
 			/*************************/
