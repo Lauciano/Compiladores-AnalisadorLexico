@@ -11,6 +11,15 @@ public:
 		nome = name;
 		classificacao = classif;
 	}
+	unsigned int getLine(){
+		return linha;
+	}
+	string getName(){
+		return nome;
+	}
+	string getClassif(){
+		return classificacao;
+	}
 private:
 	unsigned int linha;
 	string nome;
