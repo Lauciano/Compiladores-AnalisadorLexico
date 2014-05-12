@@ -32,6 +32,7 @@ public:
 	LexicalAnalyzer();
 	~LexicalAnalyzer();
 	int analyze(ifstream *code);
+	void writeOutput(ofstream *output);
 	bool checkRestriction(string word);
 	bool isLetter(char symbol);
 	bool isNumber(char symbol);

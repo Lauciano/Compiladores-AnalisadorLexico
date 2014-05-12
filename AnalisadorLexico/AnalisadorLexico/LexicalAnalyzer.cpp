@@ -176,6 +176,14 @@ bool LexicalAnalyzer::isLetter(char symbol){
 	return letter;
 }
 
+void LexicalAnalyzer::writeOutput(ofstream *output){
+	*output << "Token\t\t\t\tClassificacao\t\t\t\tLinha" << endl;
+	vector<lexToken>::iterator it;
+	for(it = token->begin(); it == token->end(); ++it){
+		*output << it->nome << endl;
+	}
+}
+
 bool LexicalAnalyzer::isNumber(char symbol){
 	switch (symbol){
 	case '0':
