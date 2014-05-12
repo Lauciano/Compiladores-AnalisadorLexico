@@ -2,14 +2,15 @@
 #include <vector>
 #include <list>
 #include "LexicalAnalyzer.h"
+#include <iostream>
 
 using namespace std;
 
 
 int main(int n_arg, char** args){
 	//Variáveis e Ponteiros
-	ifstream *code;
-	ofstream *lexc;
+	ifstream *code = NULL;
+	ofstream *lexc = NULL;
 	//string l_reserv[] = {"program", "var", "integer","real","boolean",
 	//	"procedure","begin","end","if", "then","else","while","do","not"};
 	char input[256] = "TextLex.txt", output[256] = "TextLex.out";
@@ -24,6 +25,11 @@ int main(int n_arg, char** args){
 	//ISSO AQUI TEM ERRO LAU, CONSERTA AÍ. VOU ASSUMIR QUE CODE e LEXC ESTÃO FUNCIONANDO
 	//O meu intellisense tá dizendo aqui que o operador "+" não pode ser usado com esses operandos aí
 	code = new ifstream(input);
+	
+	if (code == NULL){
+		cout << "Arquivo invalido" << endl;
+	}
+
 	lexc = new ofstream(output);
 	//Vou fazer a escrita em C, depois se você quiser mudar beleza.
 	//FILE *input, *output;

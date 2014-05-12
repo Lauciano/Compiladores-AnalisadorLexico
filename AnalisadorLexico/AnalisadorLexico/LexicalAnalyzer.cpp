@@ -33,7 +33,7 @@ void LexicalAnalyzer::analyze(ifstream *code){
 	while (!code->eof()){
 		code->getline(reading, 256);
 		counter++;
-		for (int i = 0; i < 256; /*Propositalmente Vazio*/){
+		for (unsigned int i = 0; i < strlen(reading); /*Propositalmente Vazio*/){
 			/* Comentário */
 			if (reading[i] == '{'){
 				commentary = true;
@@ -91,20 +91,23 @@ void LexicalAnalyzer::analyze(ifstream *code){
 				/* Símbolos Simples */
 				/* Delimitadores */
 				else if (reading[i] == ';' || reading[i] == '.' || reading[i] == ':' || reading[i] == '(' || reading[i] == ')' || reading[i] == ','){
-					string word(&reading[i]);
+					tk[0] = reading[i]; tk[1] = '\0';
+					string word(tk);
 					lexToken newTok(counter, word, "Delimitador");
 					token->push_back(newTok);
 					i++;
 				}
 				/* Operador Relacional */
 				else if (reading[i] == '=' || reading[i] == '<' || reading[i] == '>'){
-					string word(&reading[i]);
+					tk[0] = reading[i]; tk[1] = '\0';
+					string word(tk);
 					lexToken newTok(counter, word, "Operador Relacional");
 					token->push_back(newTok);
 					i++;
 				}
 				/* Operador Aditivo */
 				else if (reading[i] == '+' || reading[i] == '-'){
+					tk[0] = reading[i]; tk[1] = '\0';
 					string word(tk);
 					lexToken newTok(counter, word, "Operador Aditivo");
 					token->push_back(newTok);
@@ -112,6 +115,7 @@ void LexicalAnalyzer::analyze(ifstream *code){
 				}
 				/* Operador Multiplicativo */
 				else if (reading[i] == '*' || reading[i] == '/'){
+					tk[0] = reading[i]; tk[1] = '\0';
 					string word(tk);
 					lexToken newTok(counter, word, "Operador Multiplicativo");
 					token->push_back(newTok);
@@ -121,6 +125,7 @@ void LexicalAnalyzer::analyze(ifstream *code){
 				/* Conjuntos de Símbolos */
 				/* Palavra Reservada ou Identificador */
 				else if (isLetter(reading[i])){
+					bool found = false;
 					unsigned int j = 0;
 					tk[j] = reading[i++];
 					for (j++; isLetter(reading[i]) || isNumber(reading[i]) || reading[i] == '_'; j++){
@@ -132,12 +137,14 @@ void LexicalAnalyzer::analyze(ifstream *code){
 							string word(tk);
 							lexToken lex(counter, word, "Palavra reservada");
 							token->push_back(lex);
+							found = true;
+							break;
 						}
-						else {
-							string word(tk);
-							lexToken lex(counter, word, "Identificador");
-							token->push_back(lex);
-						}
+					}
+					if (!found){
+						string word(tk);
+						lexToken lex(counter, word, "Identificador");
+						token->push_back(lex);
 					}
 				}
 				/* Números Inteiros ou Reais */
@@ -154,13 +161,13 @@ void LexicalAnalyzer::analyze(ifstream *code){
 						}
 						tk[j] = '\0';
 						string word(tk);
-						lexToken lex(counter, word, "Número real");
+						lexToken lex(counter, word, "Numero real");
 						token->push_back(lex);
 					}
 					else {
 						tk[j] = '\0';
 						string word(tk);
-						lexToken lex(counter, word, "Número inteiro");
+						lexToken lex(counter, word, "Numero inteiro");
 						token->push_back(lex);
 					}
 				}
@@ -169,7 +176,7 @@ void LexicalAnalyzer::analyze(ifstream *code){
 					i++;
 				}
 				else {
-					cout << "Símbolo " << reading[i] << " não reconhecido." << endl;
+					cout << "Simbolo " << reading[i] << " nao reconhecido." << endl;
 					i++;
 				}
 			}
@@ -182,7 +189,7 @@ void LexicalAnalyzer::analyze(ifstream *code){
 		}
 	}
 	if (commentary){
-		cout << "Esperado } ao fim de um comentário." << endl;
+		cout << "Esperado } ao fim de um comentario." << endl;
 	}
 }
 
