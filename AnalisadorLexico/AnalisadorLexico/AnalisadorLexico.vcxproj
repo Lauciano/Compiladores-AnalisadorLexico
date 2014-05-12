@@ -11,7 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="LexicalAnalyzer.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="LexicalAnalyzer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8B3EA8B3-59EF-400D-9B6F-8FAA141D5CAB}</ProjectGuid>
