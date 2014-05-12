@@ -43,47 +43,42 @@ int LexicalAnalyzer::analyze(ifstream *code){
 			/* Comando de Atribuição */
 			if (reading[i] == ':' && reading[i + 1] == '='){
 				tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
-				token->push_back(*(new string(tk)));
-				type->push_back("Comando de Atribuição");
-				line->push_back(counter);
+				lexToken newTok(counter, *(new string(tk)), *(new string("Comando de Atribuicao")));
+				token->push_back(newTok);
 				i += 2;
 			}
 			/* Operadores Relacionais */
 			else if (reading[i] == '<' && reading[i + 1] == '='){
 				tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
-				token->push_back(*(new string(tk)));
-				type->push_back("Operador relacional");
-				line->push_back(counter);
+				lexToken newTok(counter, *(new string(tk)), *(new string("Operador Relacional")));
+				token->push_back(newTok);
 				i += 2;
 			}
 			else if (reading[i] == '>' && reading[i + 1] == '='){
 				tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
-				token->push_back(*(new string(tk)));
-				type->push_back("Operador relacional");
-				line->push_back(counter);
+				lexToken newTok(counter, *(new string(tk)), *(new string("Operador Relacional")));
+				token->push_back(newTok);
 				i += 2;
 			}
 			else if (reading[i] == '<' && reading[i + 1] == '>'){
 				tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
-				token->push_back(*(new string(tk)));
-				type->push_back("Operador relacional");
-				line->push_back(counter);
+				lexToken newTok(counter, *(new string(tk)), *(new string("Operador Relacional")));
+				token->push_back(newTok);
 				i += 2;
 			}
 			/* Operadores Aditivos */
 			else if (reading[i] == 'o' && reading[i + 1] == 'r'){
 				tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
-				token->push_back(*(new string(tk)));
-				type->push_back("Operador aditivo");
-				line->push_back(counter);
+				lexToken newTok(counter, *(new string(tk)), *(new string("Operador Aditivo")));
+				token->push_back(newTok);
 				i += 2;
 			}
 			/* Operadores Multiplicativo */
-			else if (reading[i] == 'a' && reading[i + 1] == 'n' && reading[i + 2] == 'd'){
+			else if (reading[i] == 'a' && reading[i + 1] == 'n' && reading[i + 2] == 'd' && reading[i + 3] != '_' && !isNumber(reading[i + 3])
+				&& !isLetter(reading[i + 3])){
 				tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = reading[i + 2]; tk[3] = '\0';
-				token->push_back(*(new string(tk)));
-				type->push_back("Operador multiplicativo");
-				line->push_back(counter);
+				lexToken newTok(counter, *(new string(tk)), *(new string("Operador Multiplicativo")));
+				token->push_back(newTok);
 				i += 3;
 			}
 			/********************/
