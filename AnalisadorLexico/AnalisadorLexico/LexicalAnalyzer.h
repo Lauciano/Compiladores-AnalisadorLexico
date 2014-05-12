@@ -13,9 +13,7 @@ public:
 	bool isNumber(char symbol);
 private:
 	/* Tabela de Léxicos */
-	vector<string> *token;
-	vector<string> *type;
-	vector<unsigned int> *line;
+	vector<lexToken> *token;
 	/* Lista de Palavras Reservadas */
 	vector<string> *restricted_word;
 };

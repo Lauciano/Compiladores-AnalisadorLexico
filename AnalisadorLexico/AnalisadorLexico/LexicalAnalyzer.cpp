@@ -1,9 +1,21 @@
 #include "LexicalAnalyzer.h"
 
+class lexToken
+{
+	int linha;
+	string nome;
+	string classificacao;
+
+public:
+	lexToken(int line, string name, string classif){
+		linha = line;
+		nome = name;
+		classificacao = classif;
+	}
+};
+
 LexicalAnalyzer::LexicalAnalyzer(){
-	token = new vector<string>();
-	type = new vector<string>();
-	line = new vector<unsigned int>();
+	token = new vector<lexToken>();
 	restricted_word = new vector<string>();
 	restricted_word->push_back("program");
 	restricted_word->push_back("var");
