@@ -34,8 +34,8 @@ int main(int n_arg, char** args){
 	//Análise Léxica
 
 	//Fechamento de Arquivos
-	code->close;
-	lexc->close;
+	code->close();
+	lexc->close();
 
 	//Retorno
 	return 0;
