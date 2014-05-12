@@ -1,5 +1,4 @@
 #include <fstream>
-#include <cstring>
 #include <vector>
 
 using namespace std;
@@ -33,7 +32,7 @@ class LexicalAnalyzer{
 public:
 	LexicalAnalyzer();
 	~LexicalAnalyzer();
-	int analyze(ifstream *code);
+	void analyze(ifstream *code);
 	void writeOutput(ofstream *output);
 	bool checkRestriction(string word);
 	bool isLetter(char symbol);
