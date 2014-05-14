@@ -1,5 +1,6 @@
 #include <cstring>
 #include <iostream>
+#include <string>
 #include "LexicalAnalyzer.h"
 
 LexicalAnalyzer::LexicalAnalyzer(){
@@ -27,18 +28,28 @@ LexicalAnalyzer::~LexicalAnalyzer(){
 }
 
 void LexicalAnalyzer::analyze(ifstream *code){
+	string readline;
 	bool commentary = false;
-	char reading[256], tk[256];
 	unsigned int counter = 0;
 	while (!code->eof()){
-		code->getline(reading, 256);
+		getline(*code, readline);
+		unsigned int size = readline.length();
+		char *reading = new char[size + 1],
+			*tk = new char[size + 1];
+		strcpy(reading, readline.c_str());
 		counter++;
-		for (unsigned int i = 0; i < strlen(reading); /*Propositalmente Vazio*/){
+		for (unsigned int i = 0; i < size; /*Propositalmente Vazio*/){
 			/* Comentário */
 			if (reading[i] == '{'){
 				commentary = true;
 			}
-			if (!commentary) {
+			if (commentary){
+				if (reading[i] == '}'){
+					commentary = false;
+				}
+				i++;
+			}
+			else {
 				/* Símbolos Compostos */
 				/* Comando de Atribuição */
 				if (reading[i] == ':' && reading[i + 1] == '='){
@@ -155,7 +166,7 @@ void LexicalAnalyzer::analyze(ifstream *code){
 						tk[j] = reading[i++];
 					}
 					if (reading[i] == '.'){
-						tk[j] = reading[i];
+						tk[j] = reading[i++];
 						for (j++; isNumber(reading[i]); j++){
 							tk[j] = reading[i++];
 						}
@@ -180,13 +191,10 @@ void LexicalAnalyzer::analyze(ifstream *code){
 					i++;
 				}
 			}
-			else {
-				if (reading[i] == '}'){
-					commentary = false;
-				}
-				i++;
-			}
 		}
+		//Deletando ponteiros de leitura
+		delete[] reading;
+		delete[] tk;
 	}
 	if (commentary){
 		cout << "Esperado } ao fim de um comentario." << endl;
