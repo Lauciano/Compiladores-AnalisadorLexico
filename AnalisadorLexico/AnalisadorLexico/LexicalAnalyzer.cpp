@@ -51,8 +51,11 @@ void LexicalAnalyzer::analyze(ifstream *code){
 			}
 			else {
 				/* Símbolos Compostos */
+				if (reading[i] == '/' && reading[i + 1] == '/'){
+					break;
+				}
 				/* Comando de Atribuição */
-				if (reading[i] == ':' && reading[i + 1] == '='){
+				else if (reading[i] == ':' && reading[i + 1] == '='){
 					tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
 					string word(tk);
 					lexToken newTok(counter, word, "Comando de Atribuicao");
@@ -82,7 +85,7 @@ void LexicalAnalyzer::analyze(ifstream *code){
 					i += 2;
 				}
 				/* Operadores Aditivos */
-				else if (reading[i] == 'o' && reading[i + 1] == 'r' && reading[i + 2] != '_' && !isNumber(reading[i + 2] && !isLetter(reading[i + 2])){
+				else if (reading[i] == 'o' && reading[i + 1] == 'r' && reading[i + 2] != '_' && !isNumber(reading[i + 2]) && !isLetter(reading[i + 2])){
 					tk[0] = reading[i];	tk[1] = reading[i + 1];	tk[2] = '\0';
 					string word(tk);
 					lexToken newTok(counter, word, "Operador Aditivo");
